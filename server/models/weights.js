@@ -19,7 +19,7 @@ async function getWeights(cohort_id, db = devDB) {
 
 // newWeights
 // what should be returned here???
-async function newWeights(cohort_id, n, db = devDB) {
+function newWeights(cohort_id, n, db = devDB) {
   const weightsMatrix = initWeights(n);
   const weightsString = JSON.stringify(weightsMatrix);
   return db("weights").insert({ cohort_id, weights: weightsString });
@@ -33,9 +33,9 @@ function initWeights(n) {
 // updateWeights
 // Note: This might be better to use the weights.id rather than cohort_id?
 // Note: does this want to update OR insert?
-async function updateWeights(cohort_id, weightsMatrix, db = devDB) {
+function updateWeights(cohort_id, weightsMatrix, db = devDB) {
   const weightsString = JSON.stringify(weightsMatrix);
-  return await db("weights")
+  return db("weights")
     .where("weights.cohort_id", cohort_id)
     .update({ weights: weightsString, cohort_id });
 }
