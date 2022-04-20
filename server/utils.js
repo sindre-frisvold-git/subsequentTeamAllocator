@@ -1,9 +1,12 @@
 // Imports
 const _ = require("lodash");
 
+// create a 1d array
 function createArray(cols, fill = 0) {
   return _.range(cols).fill(fill);
 }
+
+// create 2d array
 function createArray2D(rows, cols, fill = 0) {
   return _.range(rows).map(() => createArray(cols, fill));
 }
@@ -17,5 +20,9 @@ function forEachPair(array, callback) {
   }
 }
 
+function copyArray2D(array2D) {
+  return array2D.map((innerArray) => innerArray.slice());
+}
+
 // Exports
-module.exports = { createArray, createArray2D, forEachPair };
+module.exports = { createArray, createArray2D, forEachPair, copyArray2D };

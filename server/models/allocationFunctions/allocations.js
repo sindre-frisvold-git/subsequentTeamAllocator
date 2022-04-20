@@ -1,9 +1,14 @@
 // Imports
 const _ = require("lodash");
 const allocationFunction = require("./randomScored"); // change to genetic..
-const { createArray, createArray2D, forEachPair } = require("./utils");
-const { getPeople } = require("../models/people");
-const { getWeights, updateWeights } = require("../models/weights");
+const {
+  createArray,
+  createArray2D,
+  forEachPair,
+  copyArray2D,
+} = require("../../utils");
+const { getPeople } = require("../dbFunctions/people");
+const { getWeights, updateWeights } = require("../dbFunctions/weights");
 
 // given id, returns the new allocation using team names and people names
 async function newAllocation(cohort_id, teams) {
@@ -37,7 +42,7 @@ async function newAllocation(cohort_id, teams) {
   }
 }
 
-// Return object formated like {teamNmae : [peoplesNames]}
+// Return object formated like {teamName : [peoplesNames]}
 //  would this be more readable broken down into a couple of steps?
 //  could each step be made more generic and used elsewhere?
 // Note: currently just sending back person id - did we want the full person object?
@@ -84,7 +89,7 @@ function dePadWeights(requiredSize, weights) {
 // make sure we don't get two placeholders in the same team
 //  by making the pair weights infinity (this might need to be changed to just a large number)
 function stopDoublePlaceholder(actualNumberPeople, weights) {
-  const newWeights = [...weights];
+  const newWeights = copyArray2D(weights);
   const placeHolders = _.range(actualNumberPeople, newWeights.length);
   forEachPair(placeHolders, (a, b) => {
     newWeights[a][b] = newWeights[b][a] = Infinity;
@@ -94,11 +99,7 @@ function stopDoublePlaceholder(actualNumberPeople, weights) {
 
 // I should probably make this pure...
 function calculateNewWeights(weights, allocation) {
-  console.log("WEIGHTS");
-  console.table(weights);
-  console.log("PEOPLE");
-  console.table(allocation);
-  let newWeights = [...weights];
+  let newWeights = copyArray2D(weights);
   allocation.forEach((team) => {
     forEachPair(team, (person1, person2) => {
       newWeights[person1][person2] = newWeights[person2][person1] =
