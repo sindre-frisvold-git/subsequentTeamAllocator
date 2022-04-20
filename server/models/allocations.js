@@ -9,7 +9,7 @@ const { getWeights, updateWeights } = require("../models/weights");
 async function newAllocation(cohort_id, teams) {
   try {
     const [people, weights] = await Promise.all([
-      getPeople(cohort_id),
+      getPeople(cohort_id), // do we really need all this info - or just use id?
       getWeights(cohort_id),
     ]);
     const numberTeams = teams.length;
@@ -18,19 +18,48 @@ async function newAllocation(cohort_id, teams) {
     const requiredNumberPeople = numberTeams * maxTeamSize;
     let paddedWeights = padWeights(requiredNumberPeople, weights);
     paddedWeights = stopDoublePlaceholder(actualNumberPeople, paddedWeights);
-    const allocation = allocationFunction(
+    const allocationWithPlaceholders = allocationFunction(
       numberTeams,
       maxTeamSize,
       paddedWeights
     );
-    return allocation;
-    // format allocation (remove placeholders, add team names and peoples names)
+    const allocation = removePlaceholders(
+      actualNumberPeople,
+      allocationWithPlaceholders
+    );
+    const formattedAllocation = formatAllocation(allocation, people, teams);
+    const updatedWeights = calculateNewWeights(weights, allocation);
+    await updateWeights(cohort_id, updatedWeights);
+    return formattedAllocation;
     // update weights ()
-    // format allocation
-    // return allocation
   } catch (error) {
     console.log(error);
   }
+}
+
+// Return object formated like {teamNmae : [peoplesNames]}
+//  would this be more readable broken down into a couple of steps?
+//  could each step be made more generic and used elsewhere?
+// Note: currently just sending back person id - did we want the full person object?
+function formatAllocation(allocation, people, teams) {
+  return allocation.reduce(
+    (store, team, index) => ({
+      ...store,
+      [teams[index]]: team.map((personIndex) => people[personIndex].id),
+    }),
+    {}
+  );
+}
+
+function removePlaceholders(numberPeople, allocation) {
+  console.log(`Number people: ${numberPeople}`);
+  return allocation.map((team) =>
+    team.reduce(
+      (store, current) =>
+        current >= numberPeople ? store : [...store, current],
+      []
+    )
+  );
 }
 
 //--- Should these functions be in the weights module?
@@ -45,7 +74,7 @@ function padWeights(requiredSize, weights) {
   ];
 }
 
-// remove placeholder weights
+// remove placeholder weights - NOT CURRENTLY USED
 function dePadWeights(requiredSize, weights) {
   return weights
     .map((row) => row.slice(0, requiredSize))
@@ -59,6 +88,22 @@ function stopDoublePlaceholder(actualNumberPeople, weights) {
   const placeHolders = _.range(actualNumberPeople, newWeights.length);
   forEachPair(placeHolders, (a, b) => {
     newWeights[a][b] = newWeights[b][a] = Infinity;
+  });
+  return newWeights;
+}
+
+// I should probably make this pure...
+function calculateNewWeights(weights, allocation) {
+  console.log("WEIGHTS");
+  console.table(weights);
+  console.log("PEOPLE");
+  console.table(allocation);
+  let newWeights = [...weights];
+  allocation.forEach((team) => {
+    forEachPair(team, (person1, person2) => {
+      newWeights[person1][person2] = newWeights[person2][person1] =
+        weights[person1][person2] + 1;
+    });
   });
   return newWeights;
 }

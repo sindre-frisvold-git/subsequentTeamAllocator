@@ -50,7 +50,6 @@ function scoreAllocation(allocation, weights) {
     (total, teamScore) => total + teamScore,
     0
   );
-  console.log(teamScores);
   // keep teamScores as needed for genetic algorithm
   return { teamScores, allocationScore };
 }
