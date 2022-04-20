@@ -1,6 +1,6 @@
 // Imports
 const devDB = require("../db/devDB");
-const _ = require("lodash");
+const { createArray2D } = require("./utils");
 
 // getWeights
 // Note: needs complete refactor
@@ -27,7 +27,7 @@ function newWeights(cohort_id, n, db = devDB) {
 
 // initWeights
 function initWeights(n) {
-  return _.range(n).map(() => _.range(n).fill(0));
+  return createArray2D(n, n);
 }
 
 // updateWeights

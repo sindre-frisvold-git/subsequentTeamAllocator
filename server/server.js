@@ -1,6 +1,7 @@
 // Imports
 const path = require("path");
 const express = require("express");
+const apiRoutes = require("./routes/api");
 
 // Init
 const server = express();
@@ -10,8 +11,8 @@ server.use(express.json());
 server.use(express.static(path.join(__dirname, "public")));
 
 // Routes
-// api routes go here...
-server.use("*", (req, res) => {
+server.use("/api/cohorts/", apiRoutes);
+server.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
