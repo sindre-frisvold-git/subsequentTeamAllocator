@@ -7,7 +7,8 @@
     "dev": "run-p dev:client dev:server",
     "dev:client": "webpack --watch --config client/webpack.config.js",
     "dev:server": "nodemon --watch server",
-    "knex": "knex --knexfile server/db/knexfile.js"
+    "knex": "knex --knexfile server/db/knexfile.js",
+    "test": "jest --watchAll"
   },
   "babel": {
     "presets": [
@@ -45,5 +46,8 @@
     "react-router-dom": "^6.3.0",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }
