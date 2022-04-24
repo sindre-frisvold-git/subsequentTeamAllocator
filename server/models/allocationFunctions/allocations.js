@@ -42,7 +42,7 @@ async function newAllocation(cohort_id, teams) {
   }
 }
 
-// Return object formated like {teamName : [peoplesNames]}
+// Return object formatted like {teamName : [peoplesNames]}
 //  would this be more readable broken down into a couple of steps?
 //  could each step be made more generic and used elsewhere?
 // Note: currently just sending back person id - did we want the full person object?
