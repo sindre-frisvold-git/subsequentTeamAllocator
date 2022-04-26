@@ -1,5 +1,5 @@
 // Imports
-const devDB = require("../../db/devDB");
+const devDB = require("./devDB");
 
 // add people given an array of objects (names/urls), and group id
 function addPeople(cohort_id, people, db = devDB) {

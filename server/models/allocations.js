@@ -6,9 +6,9 @@ const {
   createArray2D,
   forEachPair,
   copyArray2D,
-} = require("../../utils");
-const { getPeople } = require("../dbFunctions/people");
-const { getWeights, updateWeights } = require("../dbFunctions/weights");
+} = require("./helper/utils");
+const { getPeople } = require("../db/people");
+const { getWeights, updateWeights } = require("../db/weights");
 
 // given id, returns the new allocation using team names and people names
 async function newAllocation(cohort_id, teams) {
@@ -57,7 +57,6 @@ function formatAllocation(allocation, people, teams) {
 }
 
 function removePlaceholders(numberPeople, allocation) {
-  console.log(`Number people: ${numberPeople}`);
   return allocation.map((team) =>
     team.reduce(
       (store, current) =>

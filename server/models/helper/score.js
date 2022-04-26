@@ -1,5 +1,5 @@
 // Imports
-const { forEachPair } = require("../../utils");
+const { forEachPair } = require("./utils");
 
 // Add scores to a single allocation
 // Takes:

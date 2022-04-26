@@ -1,5 +1,5 @@
 // Imports
-const devDB = require("../../db/devDB");
+const devDB = require("./devDB");
 
 // create cohort given name and return id
 function addCohort(name, db = devDB) {

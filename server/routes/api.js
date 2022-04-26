@@ -1,13 +1,9 @@
 // Imports
 const express = require("express");
-const {
-  getCohorts,
-  getCohort,
-  addCohort,
-} = require("../models/dbFunctions/cohort");
-const { getPeople, addPeople } = require("../models/dbFunctions//people");
-const { newWeights } = require("../models/dbFunctions//weights");
-const newAllocation = require("../models/allocationFunctions/allocations");
+const { getCohorts, getCohort, addCohort } = require("../db/cohort");
+const { getPeople, addPeople } = require("../db/people");
+const { newWeights } = require("../db/weights");
+const newAllocation = require("../models/allocations");
 
 // Init
 const router = express.Router();

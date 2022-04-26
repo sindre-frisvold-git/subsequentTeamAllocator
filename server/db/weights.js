@@ -1,6 +1,6 @@
 // Imports
-const devDB = require("../../db/devDB");
-const { createArray2D } = require("../../utils");
+const devDB = require("./devDB");
+const { createArray2D } = require("../models/helper/utils");
 
 // getWeights
 // Note: needs complete refactor

@@ -5,7 +5,7 @@ const {
   createArray2D,
   copyArray2D,
   forEachPair,
-} = require("../../utils");
+} = require("./utils");
 
 // Export
 module.exports = { padWeights, stopDoublePlaceholder, calculateNewWeights };

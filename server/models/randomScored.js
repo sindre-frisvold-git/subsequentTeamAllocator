@@ -1,6 +1,6 @@
 // Imports
 const _ = require("lodash");
-const { forEachPair } = require("../../utils");
+const { forEachPair } = require("./helper/utils");
 
 // Export
 module.exports = randomScoredAllocation;
