@@ -4,10 +4,13 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "dev": "run-p dev:client dev:server",
+    "dev": "run-p dev:client dev:server format",
     "dev:client": "webpack --watch --config client/webpack.config.js",
     "dev:server": "nodemon --watch server",
     "knex": "knex --knexfile server/db/knexfile.js",
+    "lint": "eslint --ext .js,.jsx .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "test": "jest --watchAll"
   },
   "babel": {
@@ -21,6 +24,9 @@
     ]
   },
   "eslintConfig": {
+    "extends": [
+      "plugin:prettier/recommended"
+    ],
     "ignorePatterns": [
       "bundle.js"
     ]
@@ -52,6 +58,23 @@
     "webpack-cli": "^4.9.2"
   },
   "devDependencies": {
-    "jest": "^27.5.1"
+    "eslint": "^8.9.0",
+    "eslint-config-eda": "^1.1.0",
+    "babel-eslint": "^8.2.5",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jest": "^26.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "jest": "^27.5.1",
+    "prettier": "^2.5.1"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "arrowParens": "always",
+    "printWidth": 100
   }
 }
