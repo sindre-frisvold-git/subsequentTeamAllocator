@@ -1,5 +1,5 @@
 // Imports
-const { forEachPair } = require("../../utils");
+const { forEachPair } = require('../../utils')
 
 // Add scores to a single allocation
 // Takes:
@@ -16,19 +16,19 @@ const { forEachPair } = require("../../utils");
 //       With linear scoring both scenarios are the same, with exponential scoring scenario 1 is more preferable
 function score(allocation, weights) {
   const teamScores = allocation.map((team) => {
-    let score = 0;
+    let score = 0
     forEachPair(
       team,
       (person1, person2) => (score += weights[person1][person2]) // add powsers
-    );
-    return score;
-  });
+    )
+    return score
+  })
   const allocationScore = teamScores.reduce(
     (total, teamScore) => total + teamScore,
     0
-  );
-  return { teamScores, allocationScore };
+  )
+  return { teamScores, allocationScore }
 }
 
 // Export
-module.exports = { score };
+module.exports = { score }
