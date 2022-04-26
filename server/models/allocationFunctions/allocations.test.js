@@ -7,6 +7,7 @@ const {
   getBestAllocation,
 } = require("./allocations2");
 
+// Tests
 describe("randomAllocation function returns a random allocation", () => {
   it("Returns array of correct shape", () => {
     const numberTeams = 2;
@@ -45,7 +46,6 @@ describe("randomAllocations function returns multiple allocations", () => {
   // could check if randomAllocation is called the correct number of times
 });
 
-//formatAllocation
 describe("formatAllocation returns an object with keys as team names and values as arrays of ids", () => {
   it("Returns an object of the correct shape", () => {
     const allocation = [[0, 1], [2]];
@@ -56,19 +56,105 @@ describe("formatAllocation returns an object with keys as team names and values 
     expect(Object.keys(actual).length).toBe(teams.length);
     expect(Array.isArray(actual[teams[0]])).toBe(true);
   });
-  // it("Returns an object of the correct shape", () => {
-  //   const allocation = [[0, 1], [2]];
-  //   const teams = ["team0", "team1"];
-  //   const people = [{ id: 0 }, { id: 1 }, { id: 2 }];
-  //   const actual = formatAllocation(allocation, people, teams);
-  //   expect.assertions(2);
-  //   expect(Object.keys(actual).length).toBe(teams.length);
-  //   expect(Array.isArray(actual[teams[0]])).toBe(true);
-  // });
-  // check team names are correct
-  // check people's ids are correct
+  it("Returns an object with the correct team names", () => {
+    const allocation = [[0, 1], [2]];
+    const teams = ["team0", "team1"];
+    const people = [{ id: 0 }, { id: 1 }, { id: 2 }];
+    const actual = formatAllocation(allocation, people, teams);
+    expect.assertions(2);
+    expect(actual).toHaveProperty(teams[0]);
+    expect(actual).toHaveProperty(teams[1]);
+  });
+  it("Correctly swaps index with id", () => {
+    const allocation = [[0, 1], [2]];
+    const teams = ["team0", "team1"];
+    const people = [{ id: 0 }, { id: 1 }, { id: 2 }];
+    const actual = formatAllocation(allocation, people, teams);
+    expect.assertions(2);
+    expect(actual).toHaveProperty(teams[0]);
+    expect(actual).toHaveProperty(teams[1]);
+  });
 });
 
 //removePlaceholders
+describe("removePlaceholders function removes placeholder ids from an array", () => {
+  it("Returned array has the correct number of teams", () => {
+    const allocation = [
+      [0, 3],
+      [4, 1],
+      [2, 5],
+    ];
+    const numberPeople = 3;
+    const actual = removePlaceholders(numberPeople, allocation);
+    expect.assertions(2);
+    expect(actual.length).toBe(3);
+    expect(actual.flat().length).toBe(3);
+  });
+  it("Returned array removed correct ids", () => {
+    const allocation = [
+      [0, 3],
+      [4, 1],
+      [2, 5],
+    ];
+    const numberPeople = 3;
+    const actual = removePlaceholders(numberPeople, allocation);
+    expect.assertions(2);
+    expect(actual[0]).not.toContain(3);
+    expect(actual.flat().every((entry) => entry < numberPeople)).toBe(true);
+  });
+});
 
-//getBestAllocation
+describe("getBestAllocation function returns the best allocation", () => {
+  it("Returns an array of the correct shape", () => {
+    const allocations = [
+      {
+        allocation: [
+          [0, 1],
+          [2, 3],
+        ],
+        teamScores: [0, 2],
+        allocationScore: 2,
+      },
+      {
+        allocation: [
+          [3, 1],
+          [2, 0],
+        ],
+        teamScores: [1, 0],
+        allocationScore: 1,
+      },
+    ];
+    const actual = getBestAllocation(allocations);
+    expect.assertions(4);
+    expect(Array.isArray(actual)).toBe(true);
+    expect(actual.length).toBe(2);
+    expect(actual[0].length).toBe(2);
+    expect(actual.flat().length).toBe(4);
+  });
+  it("Returns the allocation with the lowest allocationScore", () => {
+    const allocations = [
+      {
+        allocation: [
+          [0, 1],
+          [2, 3],
+        ],
+        teamScores: [0, 2],
+        allocationScore: 2,
+      },
+      {
+        allocation: [
+          [3, 1],
+          [2, 0],
+        ],
+        teamScores: [1, 0],
+        allocationScore: 1,
+      },
+    ];
+    const actual = getBestAllocation(allocations);
+    expect.assertions(1);
+    expect(actual).toEqual([
+      [3, 1],
+      [2, 0],
+    ]);
+  });
+});

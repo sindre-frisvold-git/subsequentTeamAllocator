@@ -2,6 +2,7 @@
 exports.up = async (knex) => {
   return await knex.schema.createTable("weights", (table) => {
     table.increments();
+    // check size of string and text - could this be a problem?
     table.string("weights").notNullable();
     table
       .integer("cohort_id")

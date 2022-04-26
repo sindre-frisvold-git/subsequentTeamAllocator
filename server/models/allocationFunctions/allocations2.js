@@ -13,7 +13,11 @@ module.exports = {
 
 // Return an array containing a given number of random allocations
 // Takes:
-//  -
+//  - numberTeams: int
+//  - teamSize: int
+//  - numberAllocations: int (the number of random allocations to return)
+// Returns:
+//  - allocations: 3d array (array of allocation arrays which are 2d)
 function randomAllocations(numberTeams, teamSize, numberAllocations) {
   return range(numberAllocations).map(() =>
     randomAllocation(numberTeams, teamSize)

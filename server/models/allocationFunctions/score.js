@@ -19,7 +19,7 @@ function score(allocation, weights) {
     let score = 0;
     forEachPair(
       team,
-      (person1, person2) => (score += weights[person1][person2]) // add powsers
+      (person1, person2) => (score += Math.pow(weights[person1][person2], 2))
     );
     return score;
   });
