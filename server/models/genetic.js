@@ -1,6 +1,6 @@
 // Imports
 const _ = require("lodash");
-
+module.exports = {createSwap2People2DAllocations}
 // similar to the random, but needs:
 //  - var: number mutations
 //  - var: generations

@@ -71,6 +71,9 @@ function index1DTo2D(index1D, innerArraySize) {
 function sortDescendingByKey(arrayOfObjects, sortKey) {
   return arrayOfObjects.sort((a, b) => b[sortKey] - a[sortKey]);
 }
+function sortAscendingByKey(arrayOfObjects, sortKey) {
+  return arrayOfObjects.sort((a, b) => a[sortKey] - b[sortKey]);
+}
 
 // Exports
 module.exports = {
@@ -80,4 +83,5 @@ module.exports = {
   copyArray2D,
   index1DTo2D,
   sortDescendingByKey,
+  sortAscendingByKey
 };
