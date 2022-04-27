@@ -19,9 +19,7 @@ module.exports = {
 // Returns:
 //  - allocations: 3d array (array of allocation arrays which are 2d)
 function randomAllocations(numberTeams, teamSize, numberAllocations) {
-  return range(numberAllocations).map(() =>
-    randomAllocation(numberTeams, teamSize)
-  );
+  return range(numberAllocations).map(() => randomAllocation(numberTeams, teamSize));
 }
 
 // Returns a random allocation of numbers between 0 and (numberTeams * teamSize - 1)
@@ -78,10 +76,6 @@ function formatAllocation(allocation, people, teams) {
 //  - allocation : 2d array (with placeholders removed)
 function removePlaceholders(numberPeople, allocation) {
   return allocation.map((team) =>
-    team.reduce(
-      (store, current) =>
-        current >= numberPeople ? store : [...store, current],
-      []
-    )
+    team.reduce((store, current) => (current >= numberPeople ? store : [...store, current]), [])
   );
 }

@@ -30,9 +30,7 @@ function createSwap2People2DAllocations(allocations) {
       team: team.allocation,
       score: team.teamScores[index],
     }));
-    const sortedTeams = sortDescending(scoredTeams, "score").map(
-      (team) => team.team
-    );
+    const sortedTeams = sortDescending(scoredTeams, "score").map((team) => team.team);
 
     // swap someone out of the worst (first team)
     // make every combination of this (e.g. new allocation for every person they could swap with)

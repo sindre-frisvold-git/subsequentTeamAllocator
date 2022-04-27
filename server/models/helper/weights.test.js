@@ -1,9 +1,5 @@
 // Imports
-const {
-  padWeights,
-  stopDoublePlaceholder,
-  calculateNewWeights,
-} = require("./weights");
+const { padWeights, stopDoublePlaceholder, calculateNewWeights } = require("./weights");
 
 describe("padWeights function - adds 0 padding to a 2d array", () => {
   it("Returned array has the correct dimensions", () => {
@@ -25,9 +21,7 @@ describe("padWeights function - adds 0 padding to a 2d array", () => {
       [3, 4],
     ];
     const actual = padWeights(requiredSize, weights);
-    const actualSum = actual
-      .flat()
-      .reduce((store, current) => store + current, 0);
+    const actualSum = actual.flat().reduce((store, current) => store + current, 0);
     const expectedSum = 10;
     expect.assertions(2);
     expect(actual[1][1]).toBe(4);

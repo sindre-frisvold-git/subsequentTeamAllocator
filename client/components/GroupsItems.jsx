@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
 
 function GroupsItems(props) {
-  return (<>
-    <p>{props.groupName}</p>
-    <p>{props.count}</p>
-  </>
-  )
+  return (
+    <>
+      <p>{props.groupName}</p>
+      <p>{props.count}</p>
+    </>
+  );
 }
 
-export default GroupsItems
+export default GroupsItems;

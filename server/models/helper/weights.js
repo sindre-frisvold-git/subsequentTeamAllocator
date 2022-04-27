@@ -1,11 +1,6 @@
 // Imports
 const { range } = require("lodash");
-const {
-  createArray,
-  createArray2D,
-  copyArray2D,
-  forEachPair,
-} = require("./utils");
+const { createArray, createArray2D, copyArray2D, forEachPair } = require("./utils");
 
 // Export
 module.exports = { padWeights, stopDoublePlaceholder, calculateNewWeights };
@@ -53,8 +48,7 @@ function calculateNewWeights(weights, allocation) {
   let newWeights = copyArray2D(weights);
   allocation.forEach((team) => {
     forEachPair(team, (person1, person2) => {
-      newWeights[person1][person2] = newWeights[person2][person1] =
-        weights[person1][person2] + 1;
+      newWeights[person1][person2] = newWeights[person2][person1] = weights[person1][person2] + 1;
     });
   });
   return newWeights;

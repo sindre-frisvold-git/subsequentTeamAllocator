@@ -5,12 +5,7 @@ const { forEachPair } = require("./helper/utils");
 // Export
 module.exports = randomScoredAllocation;
 
-function randomScoredAllocation(
-  numberTeams,
-  teamSize,
-  weights,
-  numberRandomAllocations = 10
-) {
+function randomScoredAllocation(numberTeams, teamSize, weights, numberRandomAllocations = 10) {
   const trailAllocations = _.range(numberRandomAllocations).map(() => {
     const allocation = randomAllocation(numberTeams, teamSize);
     const scores = scoreAllocation(allocation, weights);
@@ -40,16 +35,10 @@ function randomAllocation(numberTeams, teamSize) {
 function scoreAllocation(allocation, weights) {
   const teamScores = allocation.map((team) => {
     let score = 0;
-    forEachPair(
-      team,
-      (person1, person2) => (score += weights[person1][person2])
-    );
+    forEachPair(team, (person1, person2) => (score += weights[person1][person2]));
     return score;
   });
-  const allocationScore = teamScores.reduce(
-    (total, teamScore) => total + teamScore,
-    0
-  );
+  const allocationScore = teamScores.reduce((total, teamScore) => total + teamScore, 0);
   // keep teamScores as needed for genetic algorithm
   return { teamScores, allocationScore };
 }

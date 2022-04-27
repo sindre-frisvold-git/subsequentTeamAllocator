@@ -17,17 +17,10 @@ const { forEachPair } = require("./utils");
 function score(allocation, weights, power = 2) {
   const teamScores = allocation.map((team) => {
     let score = 0;
-    forEachPair(
-      team,
-      (person1, person2) =>
-        (score += Math.pow(weights[person1][person2], power))
-    );
+    forEachPair(team, (person1, person2) => (score += Math.pow(weights[person1][person2], power)));
     return score;
   });
-  const allocationScore = teamScores.reduce(
-    (total, teamScore) => total + teamScore,
-    0
-  );
+  const allocationScore = teamScores.reduce((total, teamScore) => total + teamScore, 0);
   return { teamScores, allocationScore };
 }
 

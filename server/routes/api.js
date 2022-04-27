@@ -24,10 +24,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const cohort_id = Number(req.params.id); //raise error if NaN?
-    const [cohort, people] = await Promise.all([
-      getCohort(cohort_id),
-      getPeople(cohort_id),
-    ]);
+    const [cohort, people] = await Promise.all([getCohort(cohort_id), getPeople(cohort_id)]);
     res.status(200).json({ cohort, people });
   } catch (error) {
     console.log(error); //need a persistent log
@@ -40,10 +37,7 @@ router.post("/", async (req, res) => {
   try {
     const { cohortName, people } = req.body;
     const [cohort_id] = await addCohort(cohortName);
-    await Promise.all([
-      addPeople(cohort_id, people),
-      newWeights(cohort_id, people.length),
-    ]);
+    await Promise.all([addPeople(cohort_id, people), newWeights(cohort_id, people.length)]);
     res.status(200).json({ cohort_id });
   } catch (error) {
     console.log(error); //need a persistent log

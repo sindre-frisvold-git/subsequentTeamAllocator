@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function NewGroup() {
-  return (
-    <div>Form to create a new group</div>
-  )
+  return <div>Form to create a new group</div>;
 }
 
-export default NewGroup
+export default NewGroup;

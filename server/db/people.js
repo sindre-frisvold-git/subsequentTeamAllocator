@@ -3,9 +3,7 @@ const devDB = require("./devDB");
 
 // add people given an array of objects (names/urls), and group id
 function addPeople(cohort_id, people, db = devDB) {
-  return db("people").insert(
-    people.map((person) => ({ ...person, cohort_id }))
-  );
+  return db("people").insert(people.map((person) => ({ ...person, cohort_id })));
 }
 
 // get all people given a cohort id

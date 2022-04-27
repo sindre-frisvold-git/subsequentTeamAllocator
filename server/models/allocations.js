@@ -1,12 +1,7 @@
 // Imports
 const _ = require("lodash");
 const allocationFunction = require("./randomScored"); // change to genetic..
-const {
-  createArray,
-  createArray2D,
-  forEachPair,
-  copyArray2D,
-} = require("./helper/utils");
+const { createArray, createArray2D, forEachPair, copyArray2D } = require("./helper/utils");
 const { getPeople } = require("../db/people");
 const { getWeights, updateWeights } = require("../db/weights");
 
@@ -23,15 +18,8 @@ async function newAllocation(cohort_id, teams) {
     const requiredNumberPeople = numberTeams * maxTeamSize;
     let paddedWeights = padWeights(requiredNumberPeople, weights);
     paddedWeights = stopDoublePlaceholder(actualNumberPeople, paddedWeights);
-    const allocationWithPlaceholders = allocationFunction(
-      numberTeams,
-      maxTeamSize,
-      paddedWeights
-    );
-    const allocation = removePlaceholders(
-      actualNumberPeople,
-      allocationWithPlaceholders
-    );
+    const allocationWithPlaceholders = allocationFunction(numberTeams, maxTeamSize, paddedWeights);
+    const allocation = removePlaceholders(actualNumberPeople, allocationWithPlaceholders);
     const formattedAllocation = formatAllocation(allocation, people, teams);
     const updatedWeights = calculateNewWeights(weights, allocation);
     await updateWeights(cohort_id, updatedWeights);
@@ -58,11 +46,7 @@ function formatAllocation(allocation, people, teams) {
 
 function removePlaceholders(numberPeople, allocation) {
   return allocation.map((team) =>
-    team.reduce(
-      (store, current) =>
-        current >= numberPeople ? store : [...store, current],
-      []
-    )
+    team.reduce((store, current) => (current >= numberPeople ? store : [...store, current]), [])
   );
 }
 
@@ -80,9 +64,7 @@ function padWeights(requiredSize, weights) {
 
 // remove placeholder weights - NOT CURRENTLY USED
 function dePadWeights(requiredSize, weights) {
-  return weights
-    .map((row) => row.slice(0, requiredSize))
-    .slice(0, requiredSize);
+  return weights.map((row) => row.slice(0, requiredSize)).slice(0, requiredSize);
 }
 
 // make sure we don't get two placeholders in the same team
@@ -101,8 +83,7 @@ function calculateNewWeights(weights, allocation) {
   let newWeights = copyArray2D(weights);
   allocation.forEach((team) => {
     forEachPair(team, (person1, person2) => {
-      newWeights[person1][person2] = newWeights[person2][person1] =
-        weights[person1][person2] + 1;
+      newWeights[person1][person2] = newWeights[person2][person1] = weights[person1][person2] + 1;
     });
   });
   return newWeights;
