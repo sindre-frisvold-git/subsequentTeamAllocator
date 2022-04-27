@@ -21,7 +21,7 @@ function score(allocation, weights, power = 2) {
     return score;
   });
   const allocationScore = teamScores.reduce((total, teamScore) => total + teamScore, 0);
-  return { teamScores, allocationScore };
+  return { allocation, teamScores, allocationScore };
 }
 
 // Export

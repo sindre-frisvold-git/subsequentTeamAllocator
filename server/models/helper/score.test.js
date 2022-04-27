@@ -6,10 +6,11 @@ describe("Score function - scores an allocation", () => {
     const allocation = [];
     const weights = [];
     const actual = score(allocation, weights);
-    expect.assertions(3);
+    expect.assertions(4);
     expect(actual).toHaveProperty("teamScores");
     expect(actual).toHaveProperty("allocationScore");
-    expect(Object.keys(actual).length).toBe(2);
+    expect(actual).toHaveProperty("allocation");
+    expect(Object.keys(actual).length).toBe(3);
   });
   it("teamScores to be calculated correctly using weights**2", () => {
     const allocation = [
