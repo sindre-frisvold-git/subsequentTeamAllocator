@@ -14,12 +14,13 @@ const { forEachPair } = require("./utils");
 //  E.g. scenario 1: one pair that has paired together 3 times and one pair that has paired together once - linear score: 4, exponential score: 10
 //       scenario 2: two pairs that have paired together twice - linear score: 4, exponential score: 8
 //       With linear scoring both scenarios are the same, with exponential scoring scenario 1 is more preferable
-function score(allocation, weights) {
+function score(allocation, weights, power = 2) {
   const teamScores = allocation.map((team) => {
     let score = 0;
     forEachPair(
       team,
-      (person1, person2) => (score += Math.pow(weights[person1][person2], 2))
+      (person1, person2) =>
+        (score += Math.pow(weights[person1][person2], power))
     );
     return score;
   });

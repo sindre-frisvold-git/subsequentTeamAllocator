@@ -5,7 +5,7 @@ const {
   formatAllocation,
   removePlaceholders,
   getBestAllocation,
-} = require("./allocations2");
+} = require("./allocations");
 
 // Tests
 describe("randomAllocation function returns a random allocation", () => {
