@@ -4,7 +4,7 @@ const { getCohorts, getCohort, addCohort } = require("../db/cohort");
 const { getPeople, addPeople } = require("../db/people");
 const { newWeights } = require("../db/weights");
 // remove??
-const newAllocation = require("../models/allocations");
+// const newAllocation = require("../models/allocations");
 
 // Test imports
 const getBestAllocation = require("../models/getBestAllocation");

@@ -20,7 +20,7 @@ async function getBestAllocation(cohortId, teams, allocationFunction) {
 
     const formattedWeights = formatWeights(weights, numberPeople, numberPlaces);
     let bestAllocation = allocationFunction(numberTeams, maxTeamSize, formattedWeights);
-    bestAllocation = removePlaceholders(numberPeople, bestAllocation);
+    bestAllocation = removePlaceholders(numberPeople, bestAllocation.apex.allocation);
 
     const newWeights = calculateNewWeights(weights, bestAllocation);
     await updateWeights(cohortId, newWeights);

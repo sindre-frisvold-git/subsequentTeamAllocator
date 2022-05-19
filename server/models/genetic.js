@@ -1,6 +1,6 @@
 // Imports
 const _ = require("lodash");
-module.exports = {createSwap2People2DAllocations}
+module.exports = { createSwap2People2DAllocations };
 // similar to the random, but needs:
 //  - var: number mutations
 //  - var: generations
@@ -23,12 +23,10 @@ module.exports = {createSwap2People2DAllocations}
 // prime candidate for refactoring - do we pass in one allocation or all?
 function createSwap2People2DAllocations(allocations) {
   const newAllocations = [];
-  allocations.forEach((allocation) => {
-    // need to make sure current allocation (no changes) is kept... her or after?
-    // new function? Will it be used again?
-    let scoredTeams = allocation.map((team, index) => ({
-      team: team.allocation,
-      score: team.teamScores[index],
+  allocations.forEach((allo) => {
+    let scoredTeams = allo.allocation.map((team, index) => ({
+      team,
+      score: allo.teamScores[index],
     }));
     const sortedTeams = sortDescending(scoredTeams, "score").map((team) => team.team);
 

@@ -83,5 +83,5 @@ module.exports = {
   copyArray2D,
   index1DTo2D,
   sortDescendingByKey,
-  sortAscendingByKey
+  sortAscendingByKey,
 };
